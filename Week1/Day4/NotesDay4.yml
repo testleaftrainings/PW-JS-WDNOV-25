@@ -1,0 +1,28 @@
+Agenda Week1.Day4 :
+-------------------
+
+1. Looping Statements.
+
+Understanding Loops: for, while, do-while.
+
+2. Strings
+
+String Manipulation: Common Methods and Practical Examples
+
+
+Notes :
+------
+
+let course = "Playwright"
+
+   Length | Index | Negative Index   
+P - 1        0        -10
+l - 2        1        -9
+a - 3        2        -8
+y - 4        3        -7
+w - 5        4        -6
+r - 6        5        -5
+i - 7        6        -4
+g - 8        7        -3
+h - 9        8        -2
+t -10        9        -1
