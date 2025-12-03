@@ -1,0 +1,158 @@
+📑 Agenda for Week 2 Day 3 - Playwright Locators 
+🎯 [ Focus: Mastering Locators for Precise Automation ]  
+
+📆 Date: 03 December [Wednesday]  
+
+🕝 Session Highlights
+
+ Recap  
+* Key Takeaways from Week2 Day 2
+
+1. Walk through of config file 
+* Understanding playwright.config.ts
+* Setting up test environments and browsers.
+
+2. Understanding the DOM
+* What is the DOM and How It Works 
+
+3. CSS Selectors   
+* Basic and Advanced CSS Selector Techniques.  
+* Hands-on Example: Using ID, Class, and Attribute Selectors.
+
+4. XPath Selectors
+* Relative vs. Absolute XPath: What's Better?  
+* Practical Use Cases with XPath Examples.   
+
+🕡 Wrap Up / Q&A 
+
+📝 Keep your physical notebook and pen handy to sketch out ideas!
+
+---------------------------------------------------------------------
+
+Playwright locator methods :
+----------------------------
+
+nth(), first(), and last() are Playwright Locator API methods.
+
+They help you choose which element to act on when a locator matches multiple elements.
+
+
+------------------------------------------------------------------------
+
+
+What is a callback function?
+
+A callback is just a function you give to another function, and you are telling it:
+
+👉 “When you finish your work, call this function back.”
+
+That’s it!
+
+Simple Example (Real Life)
+
+Ordering Pizza
+
+You call a pizza shop and tell them:
+
+“Here is my number.
+When the pizza is ready, call me back.”
+
+You don’t wait on the phone.
+You go do your own work.
+
+Later, the pizza shop finishes making your pizza → they call you back.
+
+That phone call = callback.
+
+💻 Same Logic in JavaScript
+
+function makePizza(callback) {
+
+    console.log("Making pizza...");
+
+    setTimeout(() => {
+        console.log("Pizza ready!");
+        callback(); // calling back
+    }, 2000);
+
+}
+
+makePizza(() => {
+    console.log("Eat the pizza!");
+});
+
+What’s happening?
+
+You give a function → () => { console.log("Eat the pizza!"); }
+
+makePizza() does its work.
+
+When it's finished, it calls your function back.
+
+*** Why do we use callbacks?
+
+Because some tasks take time:
+
+✔ Reading files
+✔ Calling APIs
+✔ Waiting for user input
+✔ Waiting for timers
+
+Instead of blocking everything, JS says:
+
+“Give me a function, I’ll call you back when I’m done.”
+
+***Simple one-line definition
+
+A callback is a function passed to another function so it can run later.
+
+********************************************************************************
+
+How Netflix Search Works (Using Callbacks):
+
+When you type a movie name in Netflix.
+Netflix sends your search to the server
+The server takes time to look for the movie
+
+When the search result comes back → Netflix shows it to you 
+
+function searchMovie(movieName, callback) {
+    console.log(Searching for "${movieName}" on Netflix...);
+
+    setTimeout(() => {
+        console.log(Movie "${movieName}" found!);
+        callback(); // calling back
+    }, 2000);
+}
+
+searchMovie("Leo", () => {
+    console.log("Display movie details to user");
+});
+
+
+
+
+
+
+
+
+
+
+
+Why callbacks are used here?
+
+Because:
+
+Searching the Netflix database takes time
+
+JavaScript cannot wait and freeze the browser
+
+So we give a callback
+
+Netflix: “When you find the movie, call me back.”
+
+
+Salesforce id:
+
+dilipkumar.rajendran@testleaf.com
+TestLeaf@2025
