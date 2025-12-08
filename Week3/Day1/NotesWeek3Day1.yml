@@ -1,0 +1,118 @@
+📑 Agenda for Week3 Day1: Learn to handle locators & Dropdowns
+🎯 [ Focus: Understanding Locators + Handling Dropdowns ]
+
+
+📆 Date: 08 December [Monday]
+
+
+1. XPath Selectors
+* Relative vs. Absolute XPath: What's Better? 
+* Advanced relative Xpath- Axes  
+* Practical Use Cases with XPath Examples.
+
+2. Handling Dropdowns  
+* Understanding dropdown types: 'select' tags and custom dropdowns.  
+* Selecting options by value, label, or index.
+* Leaftaps live example. 
+
+3. Playwright's getBy Locators
+* Explore getByText, getByRole, getByLabel, and more.  
+* Accessibility-first Automation with getBy Methods.  
+* Real-time Activity: Automating a Login Form.
+
+------------------------------------------------------------
+
+Absolute Xpath :
+/html/body/div[2]/div[2]/div/form/p/input
+
+
+Relative Xpath :
+
+Two types :
+
+Basic Relative Xpath :
+
+//tagName[@attribute='attributeValue’] --> attribute based xpath
+//tagName[text()='text value in DOM']  --> text based xpath
+//tagName[contains(@attribute, 'Partial value of the attribute')] --> partial attribute based xpath
+//tagname[contains(text(),' Partial text in my DOM' ')] --> partial text based xpath
+(//tagName[@attribute='attributeValue'])[index] --> collection based xpath
+ 
+
+
+Advanced Relative Xpath Locators :
+--------------------------
+Parent To child   : 
+------------------
+( parent realtive xpath)/(tagName of child)
+
+
+GrandParent to child Relation   :
+--------------------------------
+GrandParent relative xpath//tagName of grand child
+
+Child to parent :      
+----------------
+
+
+Grandchild to grandparent :
+-----------------------------
+
+
+Younger sibling to Elder Sibling :
+-----------------------------------
+
+
+Elder sibling to younger sibling :
+----------------------------------
+
+
+Elder Cousin to Younger Cousin :
+--------------------------------
+
+
+
+Select options used based on priority:
+-----------------------------------------
+
+
+1. Select By Value :
+-Stable and less likely to change since the value is often connected to your backend
+
+  await page.selectOption(`#createLeadForm_dataSourceId`,{value:"LEAD_DIRECTMAIL"})
+
+2. Select By Label :
+Tend to change due to business requirements / geography
+Example travel name of places in your website
+
+
+3. Select BY Index :
+When ever there is not change in the order of your dropdown can go for select by index 
+
+Non-select tags
+---------------
+1. Locate your dropdown and use click()/ enter the value
+2. locate the particular option from the dropdownlist - clickit
+
+
+
+Ways of handling dropdown:
+----------------------------
+
+| Method     | Stability | Readability | Use When...                         |
+| ---------- | --------- | ----------- | ----------------------------------- |
+| By value |   High    |   Low       | Most reliable, backend-driven IDs   |
+| By label |   Medium  |   High      | UI is stable or for quick checks    |
+| By index |   Low     |   Low       | Only if no other way /static order |
+
+----------------------------------------------------------------------------------
+Playwright Locators :
+--------------------
+
+1. getByRole()
+2. getByText()
+3. getByLabel()
+4. getByPlaceholder()
+5. getByTitle()
+6. getByAltText()
+7. getByTestId()
