@@ -1,0 +1,54 @@
+📑 Agenda for Week 3 Day 4: TypeScript Features and Storage state in Playwright
+🎯 [ Focus: Type Script Features]  
+
+📆 Date: 11 December [Tuesday]
+
+🕝 Session Highlights
+
+Recap
+   - Key Takeaways from previous session. 
+
+1. Type Aliases  
+* What are Type Aliases and why use them?  Union and Intersection
+* Syntax and examples.   
+
+2. Type Assertion  
+* What is Type Assertion?  
+* Examples: Converting unknown types. 
+
+3. Enums  
+* Understanding Enums: Numeric and String Enums.
+
+-->Classroom activity on Enums
+
+4. Storage State (Skip Login)
+
+Utilizing storage state to bypass login during test execution.
+Practical examples: Reducing redundant authentication steps.
+
+
+
+
+Notes :
+-----
+
+
+enum:
+-----
+- Enums are a way to define a set of named constants, making your code more readable and maintainable.
+
+
+Think of enum like a menu in a restaurant:
+
+Instead of customers shouting random dish names, they choose from the menu (fixed options).
+
+The menu items are the named constants (e.g., Menu.Pizza, Menu.Burger).
+
+You can’t order something not on the menu (compiler error).
+
+
+
+
+
+
+PW NOV 2025 - Weekday week2 – Fill out form
