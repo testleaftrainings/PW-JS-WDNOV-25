@@ -1,0 +1,105 @@
+📑 *Agenda for Week 4 Day 4: Advanced Playwright Interactions*
+
+🎯 *[ Focus: Handling real-world user interactions like files, and data-driven testing ]*
+
+📆 *Date:* 18 Thursday [December]  
+
+🕝 *Session Highlights*
+
+1. *File Upload*  
+* Uploading files using file input elements.  
+* Working with drag-and-drop style uploads.  
+* Example: Automating resume uploads in job portals.
+
+2. *Reading JSON Files*  
+* Importing and parsing JSON test data.   
+* Best practices for maintaining test data files.
+
+3. *Reading CSV Files*  
+* Importing and parsing CSV test data.   
+* Best practices for maintaining test data files.
+
+Notes :
+------
+
+# File Upload
+--------------
+
+### **Definition**
+
+Uploading files into a web application using Playwright.
+Playwright simulates attaching files to `<input type="file">` elements or drag-and-drop areas.
+
+---
+
+### **When `type="file"` is Present**
+
+Directly set the file(s) to the input element.
+
+const fileInput = page.locator('input[type="file"]');
+await fileInput.setInputFiles('tests/data/sample.pdf');
+
+* **Multiple Files:**
+
+await fileInput.setInputFiles(['file1.png', 'file2.png']);
+
+---
+
+### **When `type="file"` is Not Present (Custom Upload UI)**
+
+Some apps hide the `<input>` or use a styled button (drag-drop zones).
+Steps:
+
+1. Inspect and find the hidden file input.
+2. Use `setInputFiles` on that hidden element.
+
+
+const hiddenInput = page.locator('#hidden-file-input');
+await hiddenInput.setInputFiles('tests/data/sample.pdf');
+
+
+If the input is not accessible at all → Workaround is to use OS-level automation (not Playwright’s scope).
+
+--------------------------------------------------------------------
+
+# Data Parameterization with JSON
+
+---
+
+### **Definition**
+
+Feeding test data from external JSON files instead of hardcoding values.
+Useful for **data-driven testing**.
+
+*******************************************************************************************
+
+# Data Parameterization with CSV
+---
+### **Definition**
+CSV --> Comma Seperated Values.
+
+Reading test data from CSV files and running tests with multiple data sets.
+CSV is widely used in organizations for bulk test data (rows = test cases, columns = input fields).
+
+Usage
+1. Sample CSV (testData.csv):
+
+tcid,username,password
+1,demoSalesManager,crmsfa
+2,demoCSR,crmsfa
+
+Step 1:
+Install csv command :
+npm install csv-parse.
+
+Step 2:
+Create a .csv file under Data folder.
+
+Step 3:
+Create a .spec.ts and import data from csv file similar to the sample script.
+
+Step 3:
+Use the imported data in your test cases for validation.  
+
+Step 4:
+Run the test to see data-driven testing in action.
