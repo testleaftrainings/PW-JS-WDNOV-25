@@ -1,0 +1,267 @@
+📑 Agenda for Week 5 Day 3: Advanced Playwright Interactions
+🎯 Focus: Exploring Advanced Features for Enhanced Playwright Automation
+
+📆 Date: 24 Dec [Wednesday]
+
+⿦  Persistent Context (Non-incognito mode)
+
+* Maintaining login/session state across test runs using user data directories.
+* Real-world example: Avoid repeated logins for authenticated flows.
+
+⿣  Geolocation
+
+* Simulating geolocation data for location-based testing.
+* Practical use cases: Testing location-restricted functionalities.
+
+⿤ Device Emulation
+
+* Emulating various devices and screen resolutions in Playwright.
+* Practical examples: Testing responsive designs and mobile-specific features.
+
+⿥ Visual Regression Testing
+
+* Capturing and comparing UI snapshots to detect unintended changes.
+* Use cases: Ensuring consistent UI across versions and devices.
+
+**************************************************************************************
+
+Sure Ravi 👍
+Here’s a **learner-friendly, brief explanation** you can use while teaching these **advanced but practical Playwright concepts**. I’ve kept the language **simple, real-world, and classroom-ready**.
+
+---
+
+## 🔹 1. Persistent Context (Non-Incognito Mode)
+
+###  What it means
+
+By default, Playwright opens the browser in **incognito mode**, so every test starts fresh.
+**Persistent context** allows Playwright to **remember login/session data** across test runs.
+
+###  Why we need it
+
+* Avoid logging in again and again
+* Faster execution
+* Ideal for **SSO / enterprise applications**
+
+###  Real-world example
+
+Once you log in to Gmail, you don’t log in every time you open Chrome.
+Persistent context works the **same way**.
+
+###  When to use
+
+* Authenticated dashboards
+* SSO-based apps
+* Long workflows
+
+---
+
+## 🔹 2. Geolocation
+
+###  What it means
+
+Geolocation allows us to **fake the user’s location** (latitude & longitude) inside the browser.
+
+### 💡 Why we need it
+
+Some applications behave differently based on location.
+
+###  Real-world examples
+
+* Food delivery apps showing nearby restaurants
+* Banking apps with country restrictions
+* Ride-hailing apps
+
+###  What Playwright does
+
+It tells the browser:
+
+> “Pretend the user is in **Chennai / Bangalore / New York**”
+
+---
+
+## 🔹 3. Device Emulation
+
+###  What it means
+
+Playwright can **pretend to be a real device** like:
+
+* iPhone
+* Pixel
+* iPad
+* Desktop screens
+
+###  Why we need it
+
+Applications look and behave **differently on mobile vs desktop**.
+
+###  Real-world example
+
+* Hamburger menu on mobile
+* Touch gestures
+* Different layouts for screen sizes
+
+###  What Playwright emulates
+
+* Screen size
+* User agent
+* Touch support
+* Device scale
+
+---
+
+
+
+## ✅ Simple Comparison Table (for learners)
+
+| Feature            | Focus                       |
+| ------------------ | --------------------------- |
+| Persistent Context | Session & login memory      |
+| Geolocation        | Location-based behavior     |
+| Device Emulation   | Responsive & mobile testing |
+| Visual Testing     | UI consistency              |
+
+---
+
+
+
+
+
+
+Why Persistent Context Helps for SSO
+
+SSO flows typically involve redirects, external identity providers (IdP), cookies, and session tokens. Once you authenticate successfully through SSO in a browser, the browser stores:
+
+✅ Cookies
+✅ Local storage
+✅ Session storage
+✅ Token caches
+
+A Persistent Context allows Playwright to launch a browser with a specific user data directory, so everything above is retained across runs. This means:
+
+✔ After logging in once via SSO, subsequent runs will reuse that session
+✔ You won’t need to automate the full SSO login flow every time
+✔ Tests become faster and more stable
+
+
+
+
+*****************************************************************************
+
+## ❓ Why do we go for Visual Regression Testing in Playwright?
+
+### 📌 Short answer 
+
+We use **visual regression testing** to **catch UI issues that functional tests cannot detect**.
+
+---
+
+## 🔍 The real problem with only functional testing
+
+Functional tests check:
+
+* Button is clickable ✅
+* Page navigates correctly ✅
+* API response is correct ✅
+
+But they **do NOT check how the UI looks**.
+
+### ❌ What functional tests miss
+
+* Button moved to wrong position
+* Text overlapping
+* Broken alignment
+* Wrong font / color
+* Missing icons or images
+
+👉 The app **works**, but **looks broken**.
+
+---
+
+##  What Visual Regression Testing solves
+
+Visual testing:
+
+* Takes **screenshots**
+* Compares them with **baseline images**
+* Fails the test if UI changes unexpectedly
+
+So it answers:
+
+> “Did the UI change in a way we didn’t intend?”
+
+---
+
+##  Real-world example (easy to explain to learners)
+
+### Scenario:
+
+A developer changes CSS to fix one page.
+
+### Result:
+
+* Login works ✅
+* Payment works ✅
+* But **Checkout button moves outside the screen** ❌
+
+👉 Functional test passes
+👉 Visual regression test **fails** and alerts the team
+
+---
+
+##  Why Playwright is good for Visual Testing
+
+Playwright provides:
+
+* Built-in screenshot comparison
+* Pixel-by-pixel difference detection
+* Works across:
+
+  * Browsers (Chrome, Firefox, Safari)
+  * Devices (mobile, desktop)
+  * Viewports
+
+No extra tools needed to start.
+
+---
+
+## 🧪 When should we use Visual Regression Testing?
+
+Use it when:
+
+* UI is **customer-facing**
+* App has **frequent UI changes**
+* You support **multiple devices**
+* Branding and layout are critical
+
+### Common use cases:
+
+* Dashboards
+* E-commerce apps
+* Banking & finance apps
+* SaaS products
+
+---
+
+## 🆚 Functional vs Visual Testing (Simple Table)
+
+| Aspect                     | Functional Testing | Visual Regression |
+| -------------------------- | ------------------ | ----------------- |
+| Checks behavior            | ✅                  | ❌                 |
+| Checks layout              | ❌                  | ✅                 |
+| Detects CSS issues         | ❌                  | ✅                 |
+| Detects alignment problems | ❌                  | ✅                 |
+| Ensures UI consistency     | ❌                  | ✅                 |
+
+---
+
+
+> “We go for visual regression testing in Playwright to ensure that UI changes do not break the look and feel of the application, which functional tests cannot detect.”
+
+
+
+
+
+
+
+https://forms.office.com/r/s90XZhM2fG
