@@ -1,0 +1,224 @@
+📑 Agenda for Week 06 Day 02: REST API Fundamentals - SALESFORCE
+
+🎯 [ Focus: Understanding the core concepts and hands-on implementation of REST APIs ]  
+
+📆 Date: 30 Dec. [Tuesday]  
+
+🕝 Session Highlights  
+
+⿡ Recap  
+* Quick review of key learnings from previous sessions.  
+
+
+⿥ Request Body & Response Body  
+* Understanding the structure and purpose of request and response payloads.  
+
+⿦ Authorization Types  
+* Overview of different authorization methods (e.g., Basic Auth, OAuth2).
+
+⿨ Create Lead in Salesforce
+* Practical exercise: Working with Lead using POST and GET requests. 
+
+⿧ Implementation in Postman - POST & GET Salesforce With Global Variable [Salesforce]
+* Demonstration: Creating and retrieving Incidents.
+
+🕡 Wrap Up / Q&A  
+
+📝 Keep your physical notebook and pen handy to sketch out ideas!
+
+
+***************************************************************************************
+
+Important Salesforce Account Links :
+-------------------------------------
+
+
+Salesforce document to get endpoint to generate access token  :
+https://help.salesforce.com/s/articleView?languempId=en_US&id=xcloud.remoteaccess_oauth_endpoints.htm&type=5
+
+Salesforce document to do CRUD operation for  Lead /Account :
+https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_curl.htm 
+
+
+--------------------------------------
+Steps to find the field in salesforce :
+----------------------------------------
+
+From Salesforce Setup (Recommended)
+
+Log in to your Salesforce Developer Org.
+
+Go to Setup → Object ManempIdr.
+
+Search for and click on Lead.
+
+Open Fields & Relationships.
+
+You’ll see a list of all the fields available on the Lead object.
+
+The Field Label is what you see in the UI (e.g., “Last Name”).
+
+The Field Name is what you use in the API (e.g., LastName, Company).
+
+These “Field Names” are what you should use in your JSON request body.
+
+https://testleaf22-dev-ed.develop.my.salesforce-setup.com/lightning/setup/ObjectManempIdr/Lead/FieldsAndRelationships/view
+
+✅ Example:
+
+{
+
+  "LastName": "Ravindran",
+  "Company": "Testleaf",
+  "Email": "ravi@testleaf.com",
+  "Phone": "8888888"
+}
+
+-------------------------------------------------------------------------------
+
+Script used to set global variable:
+-----------------------------------
+
+var leadresponse = pm.response.json();
+console.log(leadresponse)
+
+var resToken = leadresponse.access_token
+
+var url = leadresponse.instance_url
+
+pm.globals.set("GeneratedToken",resToken)
+
+
+----------------------------------------------------------------------------------
+
+Salesforce OAuth token generation uses *x-www-form-urlencoded* because it follows the *OAuth 2.0 specification, while creating a Lead uses **raw JSON* because it is a *REST resource operation*.
+
+---
+
+DETAILED EXPLANATION (WHY THE DIFFERENCE)
+
+---
+
+1. ACCESS TOKEN GENERATION (OAuth 2.0)
+
+Purpose
+Authenticate the client and generate an access token.
+
+API Type
+OAuth authentication endpoint.
+
+Why x-www-form-urlencoded
+
+* OAuth 2.0 standard mandates parameters to be sent as form data
+* Parameters are simple key–value pairs
+* Designed to be lightweight and secure
+* Compatible with browsers, servers, and legacy systems
+
+Typical Parameters
+grant_type
+client_id
+client_secret
+username
+password
+
+These are *credentials*, not business data.
+
+Example (Postman – Body)
+x-www-form-urlencoded
+grant_type=password
+client_id=xxxx
+client_secret=xxxx
+username=xxx
+password=xxx
+
+---
+
+2. CREATE LEAD (Salesforce REST API)
+
+Purpose
+Create a business record (Lead).
+
+API Type
+REST resource endpoint.
+
+Why raw JSON
+
+* Lead has complex structured data
+* JSON supports objects, arrays, nested fields
+* Easier to validate and extend
+* Industry-standard for REST CRUD operations
+
+Example (Postman – Body)
+raw → JSON
+
+{
+"LastName": "Ravi",
+"Company": "Testleaf",
+"Email": "[ravi@testleaf.com](mailto:ravi@testleaf.com)",
+"Phone": "9999999999"
+}
+
+---
+
+3. SIDE-BY-SIDE COMPARISON (INTERVIEW READY)
+
+Access Token API
+
+* Purpose: Authentication
+* Standard: OAuth 2.0
+* Body Type: x-www-form-urlencoded
+* Data Type: Credentials
+* Endpoint: /services/oauth2/token
+
+Create Lead API
+
+* Purpose: Business operation
+* Standard: REST
+* Body Type: raw JSON
+* Data Type: Business data
+* Endpoint: /services/data/vXX.X/sobjects/Lead
+
+---
+
+4. IMPORTANT POINT (VERY COMMON DOUBT)
+
+You *cannot send JSON* to Salesforce OAuth token endpoint.
+Salesforce will reject it because OAuth servers expect *form-encoded data only*.
+
+
+-----------------------------------------------------------------------------------
+
+Why OAuth 2.0 is used
+
+Avoids sending username/password with every API call
+
+Provides temporary, revocable access
+
+Industry-accepted security standard
+
+How it works (simple flow)
+Client sends credentials to OAuth server
+OAuth server validates credentials
+OAuth server returns access token
+Client uses token to access APIs
+
+Why x-www-form-urlencoded
+OAuth 2.0 specification requires parameters as key-value pairs
+Lightweight and secure for credential exchange
+Universally supported
+
+Example (Salesforce Token API)
+Endpoint: /services/oauth2/token
+Body type: x-www-form-urlencoded
+Used only for authenticatio
+
+
+
+
+--------------------------------------
+
+To set variable datas in a global / accessible place :
+
+1. Global
+2. Collection
+3. Environment
