@@ -1,0 +1,215 @@
+📑 **Agenda for Week 7 Day 1: Jira Integration & Playwright Advanced Features
+🎯 [Focus: Jira Integration and Playwright Features]
+
+📆 [07th Jan. Wednesday]
+
+🕝 Session Highlights
+
+⿡ Recap
+Quick review of previous learnings.
+
+1. Jira Integration
+Linking test results with Jira issues.
+Automating status updates and reporting.
+
+2. Advanced Features of Playwright.
+Geolocation, Visual Regression.
+
+------------------------------------------------
+
+Notes :
+
+Jira :
+-----
+
+## 🔹 What is `testInfo` in Playwright?
+
+`testInfo` is an **object automatically provided by Playwright** that contains **complete runtime information about a test execution**.
+
+👉 Think of `testInfo` as a **report card of the test**.
+
+---
+
+## 🔹 Where does `testInfo` come from?
+
+In hooks like:
+
+```ts
+test.afterAll(async ({}, testInfo) => {
+  await logADefectInJira(testInfo);
+});
+```
+
+Playwright **injects `testInfo` for you**.
+
+You **do NOT create it**
+You **do NOT import it here**
+
+Playwright does it internally.
+
+---
+
+## 🔹 Why `{}` as the first parameter?
+
+Normally hooks receive **fixtures** first:
+
+```ts
+async ({ page }, testInfo) => {}
+```
+
+But in `afterAll`:
+
+* You **don’t need page**
+* You **only need testInfo**
+
+So you write:
+
+```ts
+async ({}, testInfo) => {}
+```
+
+👉 `{}` means:
+
+> “I’m ignoring all fixtures”
+
+---
+
+## 🔹 What does `testInfo` contain?
+
+`testInfo` is of type:
+
+```ts
+TestInfo
+```
+
+(imported in your helper file)
+
+It contains **everything about the test run**.
+
+---
+
+## 🔹 Important `testInfo` Properties (REAL USE)
+
+### ✅ 1️⃣ `testInfo.status`
+
+```ts
+testInfo.status
+```
+
+Possible values:
+
+* `"passed"`
+* `"failed"`
+* `"timedOut"`
+* `"skipped"`
+
+👉 You used this correctly:
+
+```ts
+if (testinfo.status === "failed" || testinfo.status === "timedOut")
+```
+
+---
+
+### ✅ 2️⃣ `testInfo.title`
+
+```ts
+testInfo.title
+```
+
+Returns:
+
+```
+Test to record tracing a specific bug - YourName
+```
+
+👉 Perfect for **Jira bug summary**
+
+---
+
+### ✅ 3️⃣ `testInfo.error`
+
+testInfo.error
+```
+
+Contains:
+
+* Error message
+* Stack trace
+* Assertion failure
+
+👉 You used it for **Jira description** 💯
+
+---
+
+### ✅ 4️⃣ `testInfo.attachments`
+
+testInfo.attachments
+
+Contains:
+
+* Screenshots
+* Videos
+* Traces
+
+👉 Can be uploaded to Jira later
+
+---
+
+### ✅ 5️⃣ `testInfo.outputDir`
+
+testInfo.outputDir
+
+Path to:
+
+```
+test-results/...
+```
+
+Used for **custom reporters**
+
+---
+
+## 🔹 Flow in YOUR Code (End-to-End)
+
+### What actually happens?
+
+1️⃣ Test runs
+2️⃣ Test **fails** (Salesforce / locator / timeout)
+3️⃣ Playwright records:
+
+* Status
+* Error
+* Screenshot
+* Trace
+  4️⃣ `afterAll` hook executes
+  5️⃣ Playwright **passes `testInfo`**
+  6️⃣ `logADefectInJira(testInfo)` is called
+  7️⃣ Jira bug is created using:
+* `testInfo.title`
+* `testInfo.status`
+* `testInfo.error`
+
+👉 **Zero manual intervention**
+
+---
+
+## 🔹 Why `afterAll` is a Smart Choice
+
+| Option      | Result                       |
+| ----------- | ---------------------------- |
+| `afterEach` | ❌ Creates multiple Jira bugs |
+| `afterAll`  | ✅ One clean Jira bug         |
+| Inside test | ❌ Pollutes test logic        |
+| Reporter    | ✅ Advanced (next level)      |
+
+
+---
+
+## 🔹 One-Line Definition 
+
+> **`testInfo` is a Playwright-provided runtime object that contains execution status, errors, metadata, and artifacts of a test.**
+
+---
+
+
