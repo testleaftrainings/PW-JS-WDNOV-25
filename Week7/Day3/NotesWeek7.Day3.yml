@@ -1,0 +1,68 @@
+📑 Agenda for Week 07 Day 03: OOPS applied POM 
+🎯 Focus: Mastering Object-Oriented Programming Concepts in TypeScript]
+
+📆 12th Jan, Monday
+
+🕝 Session Highlights
+
+⿡ Recap
+Quick review of previous learnings.
+
+⿢Inheritance
+Exploring the concept of inheritance for code reuse.
+Examples: Implementing single and multilevel inheritance.
+
+⿥POM (Page Object Model)
+Design pattern to enhance test maintainability and reusability.
+Examples: Creating page classes and using them in test cases.
+
+
+--------------------------
+
+Inheritance :
+
+1. Single Inheritance :
+When a class inherits another class
+
+classA{} // 01-accessModifiers.ts --> Base class
+classB extends A{} // 04-accessModifiersPro.ts extends 03-accessModifiers.ts
+
+2. Multilevel Inheritance :
+When a class inherits another class which is already inherited from another class
+
+class A{}
+
+class B extends A{}
+class C extends B{}
+
+3. Hierarchical inheritance 
+ When multiple classes inherits a single class
+
+class A{} // Super class
+
+class B extends A{}
+class C extends A{}
+
+4. Hybrid Inheritance
+A combination of two or more types of inheritnace (e.x : multilevel and Hierarchical)
+
+
+5.Multiple Inheritance
+When a derived class inherits more than one parent class
+
+Typescript does not support multiple inheritnace using classes.
+Can be achieved through interface.
+
+-----
+
+Page Object Model :
+
+POM means:
+
+Each web page (or module) of your application is represented by a separate class,
+and that class contains locators and methods that act on that page.
+
+
+
+Loginpage --> WelcomePage --> HomePage --> LeadPage --> CreateLeadPage --> VerifyLead
+                                      ---> AccountPage --> CreateAccountPage -->VerifyAccount
