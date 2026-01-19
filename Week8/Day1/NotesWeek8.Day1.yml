@@ -1,0 +1,272 @@
+📑 Agenda for Week 8 Day 1: Abstraction, Interface in POM and Playwright Advanced Features
+🎯 Focus: Mastering POM using OOPS concept and learning advanced playwright features.
+
+📆 19th Jan, Monday
+
+🕝 Session Highlights
+
+⿡ Recap
+Quick review of previous learnings.
+
+1. Network Interception (Playwright Advanced Feature)
+
+What is network interception and why it is needed
+Intercepting API responses
+Mocking API responses for stable test execution
+
+
+2. Abstraction and Interface
+Using abstract classes and methods to define templates.
+Implementing the same in POM.
+Examples: Designing partially implemented base classes.
+
+🕡 Wrap Up / Q\&A
+
+📝 Keep your physical notebook and pen handy to sketch out ideas and test workflows!
+
+*******************************************************************************************
+
+Notes Network Interception :
+-----------------------------
+
+🔁 What is page.route() in Playwright?
+
+page.route() is a Playwright API used for network interception.
+It allows you to listen to, block, modify, or mock network requests made by a page.
+
+👉 In simple words:
+page.route() lets you control what happens to API calls before they go to the server.
+
+📌 Syntax
+await page.route(url, handler);
+
+
+url → URL / pattern to intercept (string | RegExp | glob)
+
+handler → function that decides what to do with the request
+
+🎯 Why do we need page.route()?
+
+Mock API responses
+
+Block unwanted requests (ads, analytics)
+
+Modify request headers or payload
+
+Make tests stable and fast
+
+Test UI independently of backend availability
+
+🔹 Example 1: Log all API requests
+await page.route('**/*', route => {
+  console.log(route.request().url());
+  route.continue();
+});
+
+Playwright internally does something like:
+
+“Whenever a network request matches this URL,
+I will call your function and pass two objects:
+
+a Route object
+
+a Request object”
+
+So Playwright injects these values for you.
+
+
+✔ Intercepts every request
+✔ Allows it to continue normally
+
+🔹 Example 2: Block a network request
+await page.route('**/ads/**', route => {
+  route.abort();
+});
+
+
+✔ Blocks ad-related API calls
+✔ Improves test speed and stability
+
+🔹 Example 3: Mock an API response
+await page.route('**/api/users', async route => {
+  await route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({
+      id: 1,
+      name: 'Test User'
+    })
+  });
+});
+
+
+✔ UI behaves as if API returned this response
+✔ Backend is not called
+
+🔹 Example 4: Modify request headers
+await page.route('**/api/**', route => {
+  const headers = {
+    ...route.request().headers(),
+    Authorization: 'Bearer dummy-token'
+  };
+
+  route.continue({ headers });
+});
+
+
+✔ Useful for auth, tokens, environment handling
+
+---------------------------------------------------------------------------------------------------------------
+
+
+// /* When you dont have real server ready in that case you can go for network inteception 
+// The nework logs in dev tools you can analyse for any reponse in network logs -- debugging the api call we use network interceptoon 
+// In API testing we do the mock server response without needing your actual server available
+// If you want to prevent certain request to be sebnt to the server, if you want to make changes to your request header ot your parameter , body content you can intercept the API call  */
+
+// import { test } from "@playwright/test";
+
+// test(Network interception using Salesforce login,async ({page}) => {
+    
+// /* We are going to intercept a POST call go to salesforce application click login button and observe the netwrok tab
+// Look for aura?preloadActions we are going to intercept this particular API call
+// You can see the endpoint URL request method POST, we can see the Response 
+// When we dont have an API documentation then we need to rely on Network tab which call is makng what which takes time so that is the reasn we are asking developers to share the API documentation  */
+
+
+// page.route("**/aura?preloadActions",async(route, request)=>{
+//     if(request.method()==='POST'){
+//         console.log(Request URL: ${request.url()});
+//         console.log(Request headers: ${JSON.stringify(request.headers(), null, 2)});
+// /* This will:
+// Convert the headers object into a JSON string.
+// null, 2 adds indentation for better readability. */      
+        
+//     }
+//     else {
+//         route.continue(); //means continue to interact with your server
+//     }
+
+// }) 
+
+// // route is going to control the request behaviour whether to proceed route.continue and route.abort to block
+
+// //If I want to mock a response without sending the request to actual server instead I will provide my own mock server I will send the response instead of server route.fullfill, route.continue, route.abort 
+// //page.route intercept your network request which your client is making while you interact with your web page
+// //if you want to mock the responses.
+// //route is going to have 2 parameters one is your url pattern here ** means match and get all the aura endpoint(it is the endpoint url that you want intercept)
+// //  and handler is asyncronous function what happens when that particular matching request is intercepted.
+
+// await page.goto(https://login.salesforce.com/?locale=in);
+
+//     await page.getByLabel("Username").fill("ravindran.ramdas@testleaf.com")
+
+//     await page.getByRole("textbox",{name:"Password"}).fill("Ravitestleaf#1234");
+
+//     await page.waitForTimeout(2000);
+
+//     await page.getByRole("button",{name:"Log In"}).click();
+
+//     await page.getByTitle("App Launcher",{exact:true}).click();
+
+//     await page.getByText("View All",{exact:true}).click();
+
+//     await page.getByPlaceholder("Search apps or items...",{exact:true}).fill("Service");
+// })
+
+
+
+//Additional notes on mocking he reponse :
+
+import { test } from "@playwright/test";
+
+test(Network interception using Salesforce login (Mocked), async ({ page }) => {
+
+  // Intercept the POST call to aura?preloadActions and mock the response
+  await page.route("**/aura?preloadActions", async (route, request) => {
+    if (request.method() === 'POST') {
+      console.log(Intercepted Request URL: ${request.url()});
+      console.log(Intercepted Request Headers: ${JSON.stringify(request.headers(), null, 2)});
+
+      // Mocked response body
+      const mockedResponse = {
+        actions: [
+          {
+            id: "1",
+            status: "SUCCESS",
+            returnValue: { message: "This is a mocked response" }
+          }
+        ]
+      };
+
+      console.log(Mocked Response Body:\n${JSON.stringify(mockedResponse, null, 2)});
+      // Fulfill the request with mock data instead of calling the real server
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify(mockedResponse)
+      });
+    } else {
+      // Let other requests go through
+      await route.continue();
+    }
+  });
+
+  // Navigate and simulate login flow
+  await page.goto(https://login.salesforce.com/?locale=in);
+
+  await page.getByLabel("Username").fill("ravindran.ramdas@testleaf.com");
+  await page.getByRole("textbox", { name: "Password" }).fill("Ravitestleaf#1234");
+
+  await page.waitForTimeout(2000);
+
+  await page.getByRole("button", { name: "Log In" }).click();
+
+  await page.getByTitle("App Launcher", { exact: true }).click();
+
+  await page.getByText("View All", { exact: true }).click();
+
+  await page.getByPlaceholder("Search apps or items...", { exact: true }).fill("Service");
+});
+
+
+Why this else is needed
+
+Your condition:
+
+if (request.method() === 'POST') {
+  // log request
+}
+
+
+Only handles POST requests.
+
+So for:
+
+* GET
+* OPTIONS
+* Other non-POST requests
+
+Playwright still intercepts them.
+
+If you don’t call route.continue(), then:
+
+❌ Request will hang
+❌ Page will freeze
+❌ Test may timeout
+
+So effectively this code says
+
+* If POST → observe/log it
+* Else → pass through untouched
+
+No modification
+No blocking
+No mocking
+
+One-line summary (best for learners)
+
+route.continue() tells Playwright:
+“I’m not handling this request — send it to the actual server.”
+
+This is mandatory unless you are aborting or fulfilling the request.
