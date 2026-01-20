@@ -1,0 +1,230 @@
+📑 Agenda for Week 8 Day 2: Playwright Advanced UI & Browser Capabilities
+🎯 Focus: Handling complex UI elements and leveraging advanced browser-level testing features in Playwright.
+
+📆 20th Jan, Tuesday
+
+🕝 Session Highlights
+
+ Quick Recap
+Brief recap of Day 1 learnings:
+
+
+1. Shadow DOM Handling
+
+What is Shadow DOM and why it exists
+Challenges in automation with Shadow DOM
+Accessing Shadow DOM elements in Playwright
+
+Real-time examples with open and closed Shadow Roots
+
+2. Web Table Handling
+
+Understanding dynamic and static web tables
+Identifying rows, columns, and cells effectively
+Iterating through tables using Playwright locators
+
+Real-world test scenarios (searching, validating, selecting rows)
+
+3. Geolocation Testing
+
+What is Geolocation testing and its use cases
+Simulating user location in Playwright
+Permission handling for location-based apps
+
+Practical demo (maps / location-based UI behavior)
+
+⿥ Visual Regression Testing
+
+What is visual regression and why it matters
+Screenshot comparison basics in Playwright
+Handling UI changes and tolerances
+
+Best practices for stable visual tests
+
+⿦ MCP Server (Modern Context Protocol)
+
+What MCP Server is and why it is important
+How MCP fits into modern automation ecosystems
+Conceptual understanding with real-world use cases
+
+Where MCP can be leveraged in test automation workflows
+
+🕡 Wrap Up / Q&A
+
+Key takeaways from advanced UI & browser features
+
+Common pitfalls and best practices
+
+Open Q&A
+
+📝 Note:
+Keep your physical notebook and pen ready to sketch DOM structures, table flows, and visual testing strategies.
+
+----------------------------------------------------------------------------------------
+
+Notes :
+------
+
+Shadow DOM exists to make modern web applications more reliable, reusable, and maintainable.
+
+In simple terms 👇
+
+Shadow DOM protects a component’s internal structure and styles from the rest of the page.
+
+Why Shadow DOM is Needed (Key Reasons)
+1️⃣ Encapsulation (Isolation)
+
+Keeps HTML, CSS, and JS inside a component
+
+Prevents global CSS from breaking component styles
+
+Prevents component styles from affecting the rest of the page
+
+📌 Example: A button component won’t break even if the page has button { color: red }
+
+2️⃣ Reusability of Components
+
+Components can be reused across multiple pages/apps
+
+No fear of style or DOM conflicts
+
+Same behavior everywhere
+
+📌 Used heavily in Web Components, Salesforce Lightning, Material UI, etc.
+
+3️⃣ Avoid CSS Conflicts (Big Problem in Large Apps)
+
+In large applications, global CSS becomes unmanageable
+
+Shadow DOM scopes CSS automatically
+
+No need for complex naming conventions like btn-primary-v3-final
+
+4️⃣ Cleaner & Predictable DOM Structure
+
+Internal DOM is hidden from outside access
+
+Developers control how the component is used, not how it’s implemented
+
+External code interacts only via public APIs
+
+📌 Similar to using private variables in OOPS.
+
+5️⃣ Better Maintainability
+
+Internal changes don’t affect consumers of the component
+
+Teams can update components without breaking pages
+
+Enables parallel development in large teams
+
+6️⃣ Performance Benefits
+
+Browser optimizes rendering inside Shadow DOM
+
+Faster style recalculation due to scoped styles
+
+Better rendering efficiency in complex UIs
+
+Open vs Closed Shadow DOM (Design Choice)
+Type	Why Used
+Open	Debugging, testing, flexibility
+
+
+----------------------------------------------------------------------------------------
+
+
+Visual Regression Testing – Explained Simply
+What is Visual Regression?
+
+Visual regression testing checks that the UI looks the same as before after a code change.
+
+It compares the current UI screenshot with a baseline screenshot and reports differences.
+
+Why Visual Regression is Needed
+1️⃣ Functional tests don’t catch UI issues
+
+A button may work but be:
+
+Misaligned
+
+Overlapping text
+
+Wrong color or font
+
+Functional assertions won’t fail, but users notice immediately.
+
+2️⃣ CSS changes are risky
+
+Small CSS changes can break layouts across pages
+
+Effects may appear only on certain resolutions or browsers
+
+Visual regression catches these silent failures
+
+3️⃣ Reduces Manual Visual Checking
+
+No need to manually check UI after every release
+
+Especially useful for:
+
+Dashboards
+
+Reports
+
+Marketing pages
+
+How Visual Regression Works
+
+Capture baseline screenshot (expected UI)
+
+Capture current screenshot (after changes)
+
+Compare pixel-by-pixel
+
+Fail the test if differences exceed tolerance
+
+Visual Regression in Playwright
+Example
+await expect(page).toHaveScreenshot('homepage.png');
+
+
+Playwright will:
+
+Take a screenshot
+
+Compare it with the baseline
+
+Highlight visual differences if any
+
+What Can Be Tested Visually
+
+Page layouts
+
+Component alignment
+
+Fonts, colors, icons
+
+Charts and dashboards
+
+Responsive UI (desktop vs mobile)
+
+What Should NOT Be Tested Visually
+
+Dynamic data (timestamps, live numbers)
+
+Animations
+
+Ads or rotating banners
+
+Frequently changing content
+
+Best Practices
+
+✔ Use visual tests only for stable UI areas
+✔ Mask dynamic content
+✔ Set tolerance thresholds
+✔ Run in CI with same resolution and browser
+✔ Keep baselines under version control
+
+----------------------------------------------------------------------------------------
