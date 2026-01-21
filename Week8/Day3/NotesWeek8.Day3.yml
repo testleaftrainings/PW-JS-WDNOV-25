@@ -1,0 +1,70 @@
+📑 **Agenda for Week 8 – Day 3: Test Reporting, CI/CD & Modern Automation Infrastructure**
+🎯 **Focus:** Making Playwright automation enterprise-ready using reporting, GitHub Actions, and MCP Server.
+
+📆 **Today**
+
+🕝 **Session Highlights**
+
+### ⿡ Quick Recap
+
+Brief recap of previous learnings:
+
+* Shadow DOM, Web Tables, Geolocation & Visual Testing
+* Advanced UI handling in Playwright
+* How modern apps communicate with backend systems
+
+---
+
+### 1. Allure Report (Professional Test Reporting)
+
+What is **Allure Report** and why it is used
+How Playwright integrates with Allure
+Generating rich test execution reports
+Understanding:
+
+* Test status (pass/fail/skip)
+* Steps, screenshots, and attachments
+* Trends and execution history
+
+Real-world usage:
+
+* How teams analyze failures
+* How managers and clients read reports
+
+---
+
+### 2. GitHub Actions (CI/CD for Playwright)
+
+What is **CI/CD** and why automation needs it
+Understanding **GitHub Actions** workflow
+Running Playwright tests on every:
+
+* Code push
+* Pull request
+
+Key concepts:
+
+* YAML workflow
+* Runners
+* Artifacts (test reports, screenshots)
+
+Real-world pipeline:
+Developer → GitHub → Automated Tests → Report → Team
+
+---
+
+### 3. MCP Server (Modern Context Protocol)
+
+What **MCP Server** is and why it matters
+How MCP helps AI tools understand application context
+
+Conceptual examples:
+
+* AI reading logs, test failures, and API data
+* Connecting test results to intelligent analysis
+
+---
+
+### 🕡 Wrap Up / Q&A
+
+
