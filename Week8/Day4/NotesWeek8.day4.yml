@@ -1,0 +1,135 @@
+
+📑 **Agenda for Week 8 – Day 4: Playwright Agent and Framework Walkthrouhj
+
+📆 **Today**
+
+🕝 **Session Highlights**
+
+### ⿡ Quick Recap
+
+Brief recap of previous learnings.
+
+Today’s focus:
+
+1. Playwright Agent Overview
+2. Playwright Framework Deep Dive
+
+
+
+---
+
+### 🕡 Wrap Up / Q&A
+
+
+
+
+
+
+
+
+
+
+
+
+## 1️⃣ `npm i -D allure-playwright`
+
+```bash
+npm i -D allure-playwright
+```
+
+This installs **Allure Playwright adapter** inside **your project**.
+
+📦 What it is
+A **Node.js library** that connects **Playwright test results → Allure format**
+
+🎯 What it does
+It tells Playwright:
+
+> “While executing tests, collect steps, screenshots, logs, and save them in Allure format.”
+
+It creates:
+
+```
+allure-results/
+```
+
+JSON + attachments after test execution.
+
+🧠 Think of this as
+**📤 Data generator** (inside your test framework)
+
+---
+
+## 2️⃣ `npm i -g allure-commandline --save-dev`
+
+```bash
+npm i -g allure-commandline
+```
+
+This installs **Allure CLI tool** on your **machine globally**.
+
+📦 What it is
+A **report generator**
+
+🎯 What it does
+It reads `allure-results` and creates:
+
+```
+allure-report/
+```
+
+HTML dashboard
+
+Commands it gives you:
+
+```bash
+allure generate
+allure open
+allure serve
+```
+
+🧠 Think of this as
+**📊 Report viewer** (outside your test framework)
+
+---
+
+## 🎯 Why BOTH are required?
+
+| Tool                 | Role                        |
+| -------------------- | --------------------------- |
+| `allure-playwright`  | Collects test data          |
+| `allure-commandline` | Converts data → HTML report |
+
+Just like:
+
+| Selenium                 | Allure                             |
+| ------------------------ | ---------------------------------- |
+| TestNG generates XML     | `allure-playwright` generates JSON |
+| Extent Report renders UI | `allure-commandline` renders HTML  |
+
+---
+
+## 🎯 Real Flow in Playwright
+
+```text
+Playwright Test Run
+        ↓
+allure-playwright
+        ↓
+allure-results (raw data)
+        ↓
+allure-commandline
+        ↓
+allure-report (beautiful HTML)
+```
+
+---
+
+## ❌ What happens if you install only one?
+
+| If you install            | Result                        |
+| ------------------------- | ----------------------------- |
+| Only `allure-playwright`  | Data generated, but no report |
+| Only `allure-commandline` | No data to convert            |
+| Both                      | 🎉 Full reporting works       |
+
